@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Bike;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class BikeController extends Controller
 {
@@ -14,6 +15,7 @@ class BikeController extends Controller
      */
     public function index()
     {
+        Log::info('Showing All bikes: ');
         $bikes = Bike::all();
         return view('bikes.view', compact('bikes'));
     }
@@ -25,6 +27,7 @@ class BikeController extends Controller
      */
     public function create()
     {
+        Log::info('User entered the creation screen');
         return view('bikes.create');
     }
 
@@ -49,6 +52,8 @@ class BikeController extends Controller
 
         $bike->save();
 
+        Log::info([$bike->make,$bike->model,$bike->year.  ' added to database']);
+
         return redirect('/bikes');
     }
 
@@ -60,6 +65,7 @@ class BikeController extends Controller
      */
     public function show(Bike $bike)
     {
+        Log::info('Showing Bikes: '.$bike);
         return view('bikes.view', compact('bike'));
     }
 
@@ -71,6 +77,7 @@ class BikeController extends Controller
      */
     public function edit($id)
     {
+        Log::info('Bike is being edited with the Id of: '.$id);
         $bike = Bike::find($id);
         return view('bikes.update', compact('bike'));
     }
@@ -96,6 +103,7 @@ class BikeController extends Controller
         $bike->year = $request->get('year');
         $bike->save();
         
+        Log::info('Bike has been updated with the Id of: '.$id);
         return redirect('/bikes')->with('success', 'The bike was updated!');
     }
 
@@ -109,7 +117,7 @@ class BikeController extends Controller
     {
         $bike = Bike::find($id);
         $bike->delete();
-        
+        Log::info($bike.'has been deleted with the Id of'.$id);
         return redirect('/bikes')->with('success', 'The bike was deleted!');
     }
 }

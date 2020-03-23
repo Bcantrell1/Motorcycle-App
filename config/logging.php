@@ -37,6 +37,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
+            'name' => 'moto app log',
             'channels' => ['single'],
             'ignore_exceptions' => false,
         ],
